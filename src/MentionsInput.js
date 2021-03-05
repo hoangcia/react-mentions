@@ -484,8 +484,9 @@ class MentionsInput extends React.Component {
 
     let newPlainTextValue = ev.target.value
 
+    //Fix issue https://github.com/signavio/react-mentions/issues/242
     // Derive the new value to set by applying the local change in the textarea's plain text
-    let newValue = applyChangeToValue(
+    let newValue = newPlainTextValue === '@' ? applyChangeToValue(
       value,
       newPlainTextValue,
       {
@@ -494,7 +495,7 @@ class MentionsInput extends React.Component {
         selectionEndAfter: ev.target.selectionEnd,
       },
       config
-    )
+    ): newPlainTextValue;
 
     // In case a mention is deleted, also adjust the new plain text value
     newPlainTextValue = getPlainText(newValue, config)
